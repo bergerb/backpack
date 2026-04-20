@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}
+  {% unless backpack_mode == "blog" %}
+    {% assign backpack_mode = "resume" %}
+  {% endunless %}
   {% assign hero_title = page.title | default: site.data.backpack.header.name | default: site.title %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,15 +18,12 @@
 <body>
   {% include site_header.html %}
   <div class="site-shell">
-    {% include header.html %}
-    <main class="resume-layout">
-      {% include sidebar.html %}
-      <section class="content">
-        {% include summary.html %}
-        {% include experience.html %}
-        {% include recent_posts.html %}
-      </section>
-    </main>
+    {% unless backpack_mode == "blog" %}
+      {% include hero_resume.html %}
+      <main class="resume-layout">
+        {% include home_resume.html %}
+      </main>
+    {% endunless %}
   </div>
 
   {% include site_footer.html %}

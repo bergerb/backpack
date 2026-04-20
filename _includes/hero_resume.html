@@ -1,0 +1,19 @@
+{% assign header = site.data.backpack.header %}
+<header class="hero">
+  <div class="hero__content">
+    <p class="eyebrow">{{ header.eyebrow }}</p>
+    <h1>{{ header.name }}</h1>
+    <p class="hero__title">{{ header.title }}</p>
+    <p class="hero__summary">{{ header.summary | strip }}</p>
+    {% if header.actions %}
+      <div class="hero__actions">
+        {% for action in header.actions %}
+          <a class="button button--{{ action.style }}" href="{{ action.href }}" target="_blank" rel="noreferrer">{{ action.label }}</a>
+        {% endfor %}
+        {% if header.download %}
+          <a class="button button--ghost" href="{{ header.download | relative_url }}" target="_blank" rel="noreferrer">Download PDF</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</header>
