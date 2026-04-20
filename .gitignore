@@ -5,4 +5,5 @@ _site_test
 .sass-cache
 .bundle
 vendor
+.worktrees
 
