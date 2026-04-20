@@ -1,0 +1,19 @@
+{% assign nav_pages = site.pages | where: "include_nav", true | sort: "title" %}
+<header class="site-bar">
+  <div class="site-bar__inner">
+    <div>
+      <a class="site-bar__title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      {% if site.subtitle %}
+        <p class="site-bar__subtitle">{{ site.subtitle }}</p>
+      {% endif %}
+    </div>
+    {% if nav_pages.size > 0 %}
+      <nav class="site-nav" aria-label="Primary">
+        {% for item in nav_pages %}
+          <a href="{{ item.url | relative_url }}">{{ item.nav_title | default: item.title }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+  </div>
+</header>
+

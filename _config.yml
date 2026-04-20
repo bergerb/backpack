@@ -1,0 +1,18 @@
+title: Backpack
+subtitle: Resume-inspired Jekyll theme
+description: Resume-inspired Jekyll theme demo
+url: "https://example.com"
+baseurl: ""
+markdown: kramdown
+permalink: pretty
+show_excerpts: true
+comments:
+  enabled: true
+disqus_shortname: backpack-demo
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - backpack.gemspec
+  - README.md
+  - test
+

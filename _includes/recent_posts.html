@@ -1,0 +1,22 @@
+{% assign recent_posts = paginator.posts | default: site.posts %}
+{% if recent_posts.size > 0 %}
+  <section class="panel panel--wide">
+    <div class="section-heading">
+      <h2>Recent Writing</h2>
+      <p>Blog-ready theme support for posts and page navigation.</p>
+    </div>
+
+    <div class="post-list">
+      {% for post in recent_posts limit: 5 %}
+        <article class="post-card">
+          <p class="post-card__meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <div class="post-card__excerpt">
+            {{ post.excerpt | strip_html | strip | truncatewords: 28 }}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+

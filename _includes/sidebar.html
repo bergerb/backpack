@@ -1,0 +1,48 @@
+{% assign profile = site.data.backpack %}
+<aside class="sidebar">
+  <section class="panel">
+    <h2>Contact</h2>
+    <ul class="contact-list">
+      {% for item in profile.contact %}
+        <li><a href="{{ item.href }}" target="_blank" rel="noreferrer">{{ item.text }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="panel">
+    <h2>Core Strengths</h2>
+    <div class="tag-list">
+      {% for strength in profile.core_strengths %}
+        <span>{{ strength }}</span>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Technical Skills</h2>
+    {% for skill in profile.skills %}
+      <div class="skill-group">
+        <h3>{{ skill.category }}</h3>
+        <p>
+          {% for tool in skill.tools %}
+            {{ tool.name }}{% unless forloop.last %}, {% endunless %}
+          {% endfor %}
+        </p>
+      </div>
+    {% endfor %}
+  </section>
+
+  <section class="panel">
+    <h2>Education</h2>
+    {% for item in profile.education %}
+      <div class="education-item">
+        <h3>{{ item.university }}</h3>
+        <p>{{ item.degree }}</p>
+        {% if item.honors %}
+          <p>{{ item.honors }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </section>
+</aside>
+

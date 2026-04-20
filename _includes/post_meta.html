@@ -1,0 +1,12 @@
+{% assign current_post = include.post %}
+<div class="post-meta">
+  <time datetime="{{ current_post.date | date_to_xmlschema }}">{{ current_post.date | date: "%b %-d, %Y" }}</time>
+  {% if current_post.tags and current_post.tags.size > 0 %}
+    <div class="tag-pills">
+      {% for tag in current_post.tags %}
+        <span>{{ tag }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+

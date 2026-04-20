@@ -1,0 +1,19 @@
+<section class="comments-section">
+  <h2>Comments</h2>
+  <div id="disqus_thread"></div>
+  {% assign disqus_shortname = site.comments.disqus_shortname | default: site.disqus_shortname %}
+  <script>
+    var disqus_config = function () {
+      this.page.url = "{{ page.url | absolute_url }}";
+      this.page.identifier = "{{ page.url }}";
+    };
+    (function() {
+      var d = document;
+      var s = d.createElement("script");
+      s.src = "https://{{ disqus_shortname }}.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+</section>
+

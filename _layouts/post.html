@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<article class="page-card post-card--full">
+  <header class="page-header">
+    <a class="page-backlink" href="{{ '/' | relative_url }}">Back to home</a>
+    <h1>{{ page.title }}</h1>
+    {% include post_meta.html post=page %}
+  </header>
+
+  <div class="page-content">
+    {{ content }}
+  </div>
+
+  {% assign disqus_shortname = site.comments.disqus_shortname | default: site.disqus_shortname %}
+  {% if site.comments.enabled and disqus_shortname %}
+    {% include comments.html %}
+  {% endif %}
+</article>
+

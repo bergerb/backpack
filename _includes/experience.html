@@ -1,0 +1,31 @@
+<section class="panel panel--wide">
+  <div class="section-heading">
+    <h2>Professional Experience</h2>
+    <p>Hands-on engineering, modernization, and delivery impact</p>
+  </div>
+
+  {% for experience in site.data.backpack.experiences %}
+    <article class="timeline-item">
+      <div class="timeline-item__header">
+        <div>
+          <h3>{{ experience.role }}</h3>
+          <p class="company">{{ experience.company }}</p>
+        </div>
+        <p class="timeline-item__meta">{{ experience.time }} | {{ experience.location }}</p>
+      </div>
+      <ul>
+        {% for highlight in experience.highlights %}
+          <li>{{ highlight }}</li>
+        {% endfor %}
+      </ul>
+      {% if experience.technologies %}
+        <div class="chip-row">
+          {% for technology in experience.technologies %}
+            <span>{{ technology }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  {% endfor %}
+</section>
+

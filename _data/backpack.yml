@@ -1,0 +1,64 @@
+header:
+  eyebrow: Demo Site
+  name: Sample Engineer
+  title: Senior Full-Stack Engineer
+  summary: |
+    Building secure, accessible, and maintainable software with a calm delivery cadence.
+  actions:
+    - label: GitHub
+      href: https://github.com/bergerb
+      style: primary
+    - label: LinkedIn
+      href: https://www.linkedin.com/in/brent-berger-bb19719/
+      style: secondary
+
+contact:
+  - label: Website
+    href: https://www.bergerb.net/
+    text: bergerb.net
+  - label: GitHub
+    href: https://github.com/bergerb
+    text: github.com/bergerb
+  - label: LinkedIn
+    href: https://www.linkedin.com/in/brent-berger-bb19719/
+    text: linkedin.com/in/brent-berger-bb19719
+
+core_strengths:
+  - Full-Stack Delivery
+  - Modernization
+  - Accessibility
+  - CI/CD
+
+summary: |
+  Sample profile content for proving the theme build and data contract before it is consumed remotely.
+
+education:
+  - degree: Bachelor of Science - Information Sciences & Technology
+    university: Pennsylvania State University
+    honors: Keystone Honor Society
+
+skills:
+  - category: Languages & Frameworks
+    tools:
+      - name: C#
+      - name: .NET
+      - name: Blazor
+  - category: Delivery
+    tools:
+      - name: GitHub Actions
+      - name: Azure DevOps
+      - name: Docker
+
+experiences:
+  - role: Software Engineer V
+    company: Example Organization
+    location: Remote
+    time: 2024 - Present
+    highlights:
+      - Led modernization and accessibility work across multiple applications.
+      - Introduced stronger CI/CD practices and repository governance.
+    technologies:
+      - .NET
+      - Blazor
+      - GitHub
+
