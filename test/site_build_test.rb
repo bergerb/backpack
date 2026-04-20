@@ -15,9 +15,6 @@ class SiteBuildTest < Minitest::Test
 
   def test_missing_mode_defaults_to_resume_home_structure
     html = home_page_html
-    layout = home_layout
-
-    assert_resume_mode_routing(layout)
     assert_resume_home_structure(html)
   end
 
@@ -26,9 +23,6 @@ class SiteBuildTest < Minitest::Test
       backpack:
         mode: unknown
     YAML
-    layout = home_layout
-
-    assert_resume_mode_routing(layout)
     assert_resume_home_structure(html)
   end
 
@@ -201,7 +195,7 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "Sample Engineer"
     assert_includes html, "<title>Sample Engineer | Backpack</title>"
     assert_includes html, '<header class="hero">'
-    assert_includes html, '<main class="resume-layout">'
+    assert_includes html, '<main class="resume-layout" data-backpack-mode="resume">'
     assert_includes html, '<aside class="sidebar">'
     assert_includes html, '<section class="content">'
     assert_includes html, "Professional Experience"

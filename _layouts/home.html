@@ -20,7 +20,7 @@
   <div class="site-shell">
     {% unless backpack_mode == "blog" %}
       {% include hero_resume.html %}
-      <main class="resume-layout">
+      <main class="resume-layout" data-backpack-mode="resume">
         {% include home_resume.html %}
       </main>
     {% endunless %}
