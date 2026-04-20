@@ -26,6 +26,7 @@ class SiteBuildTest < Minitest::Test
 
     assert_includes html, "Sample Engineer"
     assert_includes html, "Professional Experience"
+    assert_includes html, "<title>Sample Engineer | Backpack</title>"
   end
 
   def test_builds_standard_page_content
