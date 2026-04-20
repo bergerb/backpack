@@ -15,7 +15,9 @@ class SiteBuildTest < Minitest::Test
 
   def test_missing_mode_defaults_to_resume_home_structure
     html = home_page_html
+    layout = home_layout
 
+    assert_resume_mode_routing(layout)
     assert_resume_home_structure(html)
   end
 
@@ -24,17 +26,16 @@ class SiteBuildTest < Minitest::Test
       backpack:
         mode: unknown
     YAML
+    layout = home_layout
 
+    assert_resume_mode_routing(layout)
     assert_resume_home_structure(html)
   end
 
   def test_home_layout_normalizes_mode_and_routes_resume_partials
-    layout = File.read(File.join(repo_root, "_layouts", "home.html"))
+    layout = home_layout
 
-    assert_includes layout, '{% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}'
-    assert_includes layout, '{% unless backpack_mode == "blog" %}'
-    assert_includes layout, "{% include hero_resume.html %}"
-    assert_includes layout, "{% include home_resume.html %}"
+    assert_resume_mode_routing(layout)
     refute_includes layout, "{% include header.html %}"
   end
 
@@ -192,6 +193,10 @@ class SiteBuildTest < Minitest::Test
     File.read(File.join(output_directory, "index.html"))
   end
 
+  def home_layout
+    File.read(File.join(repo_root, "_layouts", "home.html"))
+  end
+
   def assert_resume_home_structure(html)
     assert_includes html, "Sample Engineer"
     assert_includes html, "<title>Sample Engineer | Backpack</title>"
@@ -201,5 +206,13 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, '<section class="content">'
     assert_includes html, "Professional Experience"
     assert_includes html, "Core Strengths"
+  end
+
+  def assert_resume_mode_routing(layout)
+    assert_includes layout, '{% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}'
+    assert_includes layout, '{% unless backpack_mode == "blog" %}'
+    assert_includes layout, '{% assign backpack_mode = "resume" %}'
+    assert_includes layout, "{% include hero_resume.html %}"
+    assert_includes layout, "{% include home_resume.html %}"
   end
 end
