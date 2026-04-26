@@ -65,6 +65,18 @@ permalink: /pdf/
 ---
 ```
 
+## Homepage Modes
+
+Backpack supports two homepage presentations through `_config.yml`:
+
+```yaml
+backpack:
+  mode: resume # or blog
+```
+
+- `resume` renders the original resume-style homepage and remains the default when `backpack.mode` is missing or invalid.
+- `blog` renders the blog-oriented homepage while keeping standard `page`, `post`, and `pdf` layouts available for the rest of the site.
+
 ## Data Contract
 
 The resume-style layouts expect a `_data/backpack.yml` file with these top-level keys:
