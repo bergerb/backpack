@@ -45,7 +45,7 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "github.com/bergerb"
     assert_includes html, "linkedin.com/in/brent-berger-bb19719"
     assert_match(
-      %r{<section class="panel panel--blog-social">.*?<h2>Find me online</h2>.*?</section>\s*<section class="panel panel--wide">.*?<h2>Recent Writing</h2>}m,
+      %r{<section class="panel panel--blog-social" data-backpack-section="blog-social">.*?<h2>Find me online</h2>.*?</section>\s*<section class="panel panel--wide">.*?<h2>Recent Writing</h2>}m,
       html
     )
   end
@@ -252,6 +252,7 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "Professional Experience"
     assert_includes html, "Core Strengths"
     refute_includes html, 'data-backpack-home="blog"'
+    refute_includes html, 'data-backpack-section="blog-social"'
     refute_includes html, "<h2>Find me online</h2>"
   end
 
@@ -260,6 +261,7 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "<title>Sample Engineer | Backpack</title>"
     assert_includes html, '<main class="blog-layout" data-backpack-mode="blog">'
     assert_includes html, '<section class="content" data-backpack-home="blog">'
+    assert_includes html, 'data-backpack-section="blog-social"'
     assert_includes html, '<header class="hero">'
     assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
     assert_includes html, "Welcome to Backpack"
@@ -269,8 +271,6 @@ class SiteBuildTest < Minitest::Test
     refute_includes html, "Core Strengths"
     refute_includes html, "Professional Experience"
     refute_includes html, "Senior Full-Stack Engineer"
-    refute_includes html, ">GitHub<"
-    refute_includes html, ">LinkedIn<"
   end
 
   def assert_resume_mode_routing(layout)
