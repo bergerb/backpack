@@ -212,13 +212,15 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, '<section class="content">'
     assert_includes html, "Professional Experience"
     assert_includes html, "Core Strengths"
+    refute_includes html, 'data-backpack-home="blog"'
   end
 
   def assert_blog_home_structure(html)
     assert_includes html, "Sample Engineer"
     assert_includes html, "<title>Sample Engineer | Backpack</title>"
-    assert_includes html, '<header class="hero">'
     assert_includes html, '<main class="blog-layout" data-backpack-mode="blog">'
+    assert_includes html, '<section class="content" data-backpack-home="blog">'
+    assert_includes html, '<header class="hero">'
     assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
     assert_includes html, "Welcome to Backpack"
 
