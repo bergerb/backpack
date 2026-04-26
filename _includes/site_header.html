@@ -1,6 +1,7 @@
 {% assign nav_pages = site.pages | where: "include_nav", true | sort: "title" %}
-{% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}
+{% assign backpack_mode = backpack_mode | default: site.backpack.mode | default: "resume" | downcase %}
 {% unless backpack_mode == "blog" %}
+  {% assign backpack_mode = "resume" %}
   <header class="site-bar">
     <div class="site-bar__inner">
       <div>

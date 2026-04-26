@@ -43,6 +43,21 @@ class SiteBuildTest < Minitest::Test
     refute_includes layout, "{% include header.html %}"
   end
 
+  def test_site_header_normalizes_mode_same_as_home_layout
+    include_template = site_header_include
+
+    assert_includes include_template, '{% assign backpack_mode = backpack_mode | default: site.backpack.mode | default: "resume" | downcase %}'
+    assert_includes include_template, '{% unless backpack_mode == "blog" %}'
+    assert_includes include_template, '{% assign backpack_mode = "resume" %}'
+  end
+
+  def test_recent_posts_description_uses_default_without_dead_guard
+    include_template = recent_posts_include
+
+    assert_includes include_template, '{% assign description = include.description | default: "Blog-ready theme support for posts and page navigation." %}'
+    refute_includes include_template, "{% if description %}"
+  end
+
   def test_builds_standard_page_content
     output_directory = File.join(repo_root, "_site_test")
     FileUtils.rm_rf(output_directory)
@@ -201,6 +216,14 @@ class SiteBuildTest < Minitest::Test
 
   def home_layout
     File.read(File.join(repo_root, "_layouts", "home.html"))
+  end
+
+  def site_header_include
+    File.read(File.join(repo_root, "_includes", "site_header.html"))
+  end
+
+  def recent_posts_include
+    File.read(File.join(repo_root, "_includes", "recent_posts.html"))
   end
 
   def assert_resume_home_structure(html)
