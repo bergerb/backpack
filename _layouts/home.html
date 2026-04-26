@@ -18,12 +18,17 @@
 <body>
   {% include site_header.html %}
   <div class="site-shell">
-    {% unless backpack_mode == "blog" %}
+    {% if backpack_mode == "blog" %}
+      {% include hero_blog.html %}
+      <main class="blog-layout" data-backpack-mode="blog">
+        {% include home_blog.html %}
+      </main>
+    {% else %}
       {% include hero_resume.html %}
       <main class="resume-layout" data-backpack-mode="resume">
         {% include home_resume.html %}
       </main>
-    {% endunless %}
+    {% endif %}
   </div>
 
   {% include site_footer.html %}

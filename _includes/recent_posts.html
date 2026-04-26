@@ -1,9 +1,14 @@
 {% assign recent_posts = paginator.posts | default: site.posts %}
+{% assign section_class = include.section_class | default: "panel panel--wide" %}
+{% assign heading = include.heading | default: "Recent Writing" %}
+{% assign description = include.description | default: "Blog-ready theme support for posts and page navigation." %}
 {% if recent_posts.size > 0 %}
-  <section class="panel panel--wide">
+  <section class="{{ section_class }}">
     <div class="section-heading">
-      <h2>Recent Writing</h2>
-      <p>Blog-ready theme support for posts and page navigation.</p>
+      <h2>{{ heading }}</h2>
+      {% if description %}
+        <p>{{ description }}</p>
+      {% endif %}
     </div>
 
     <div class="post-list">

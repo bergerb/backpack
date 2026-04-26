@@ -176,6 +176,14 @@ a:hover {
   margin-top: 24px;
 }
 
+.blog-layout {
+  margin-top: 24px;
+}
+
+.blog-layout .content {
+  max-width: 840px;
+}
+
 .sidebar,
 .content {
   display: flex;

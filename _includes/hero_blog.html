@@ -1,0 +1,20 @@
+{% assign header = site.data.backpack.header %}
+{% assign nav_pages = site.pages | where: "include_nav", true | sort: "title" %}
+<header class="hero">
+  <div class="hero__content">
+    {% if header.eyebrow %}
+      <p class="eyebrow">{{ header.eyebrow }}</p>
+    {% endif %}
+    <h1>{{ header.name }}</h1>
+    {% if header.summary %}
+      <p class="hero__summary">{{ header.summary | strip }}</p>
+    {% endif %}
+    {% if nav_pages.size > 0 %}
+      <div class="hero__actions">
+        {% for item in nav_pages %}
+          <a class="button button--ghost" href="{{ item.url | relative_url }}">{{ item.nav_title | default: item.title }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</header>

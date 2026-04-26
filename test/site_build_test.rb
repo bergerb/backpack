@@ -26,10 +26,20 @@ class SiteBuildTest < Minitest::Test
     assert_resume_home_structure(html)
   end
 
+  def test_explicit_blog_mode_renders_blog_home_structure
+    html = home_page_html(config_contents: <<~YAML)
+      backpack:
+        mode: blog
+    YAML
+
+    assert_blog_home_structure(html)
+  end
+
   def test_home_layout_normalizes_mode_and_routes_resume_partials
     layout = home_layout
 
     assert_resume_mode_routing(layout)
+    assert_blog_mode_routing(layout)
     refute_includes layout, "{% include header.html %}"
   end
 
@@ -86,7 +96,9 @@ class SiteBuildTest < Minitest::Test
 
     assert_includes specification.files, "_layouts/home.html"
     assert_includes specification.files, "_includes/header.html"
+    assert_includes specification.files, "_includes/hero_blog.html"
     assert_includes specification.files, "_includes/hero_resume.html"
+    assert_includes specification.files, "_includes/home_blog.html"
     assert_includes specification.files, "_includes/home_resume.html"
     assert_includes specification.files, "assets/css/main.css"
   end
@@ -202,11 +214,34 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "Core Strengths"
   end
 
+  def assert_blog_home_structure(html)
+    assert_includes html, "Sample Engineer"
+    assert_includes html, "<title>Sample Engineer | Backpack</title>"
+    assert_includes html, '<header class="hero">'
+    assert_includes html, '<main class="blog-layout" data-backpack-mode="blog">'
+    assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
+    assert_includes html, "Welcome to Backpack"
+
+    refute_includes html, 'class="site-bar"'
+    refute_includes html, '<aside class="sidebar">'
+    refute_includes html, "Core Strengths"
+    refute_includes html, "Professional Experience"
+    refute_includes html, "Senior Full-Stack Engineer"
+    refute_includes html, ">GitHub<"
+    refute_includes html, ">LinkedIn<"
+  end
+
   def assert_resume_mode_routing(layout)
     assert_includes layout, '{% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}'
     assert_includes layout, '{% unless backpack_mode == "blog" %}'
     assert_includes layout, '{% assign backpack_mode = "resume" %}'
     assert_includes layout, "{% include hero_resume.html %}"
     assert_includes layout, "{% include home_resume.html %}"
+  end
+
+  def assert_blog_mode_routing(layout)
+    assert_includes layout, '{% if backpack_mode == "blog" %}'
+    assert_includes layout, "{% include hero_blog.html %}"
+    assert_includes layout, "{% include home_blog.html %}"
   end
 end
