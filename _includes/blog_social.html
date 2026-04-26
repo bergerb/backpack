@@ -1,0 +1,11 @@
+{% assign profile = site.data.backpack %}
+<section class="panel panel--blog-social">
+  <div class="section-heading section-heading--compact">
+    <h2>Find me online</h2>
+  </div>
+  <ul class="contact-list contact-list--inline">
+    {% for item in profile.contact %}
+      <li><a href="{{ item.href }}" target="_blank" rel="noreferrer">{{ item.text }}</a></li>
+    {% endfor %}
+  </ul>
+</section>

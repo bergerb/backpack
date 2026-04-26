@@ -35,6 +35,21 @@ class SiteBuildTest < Minitest::Test
     assert_blog_home_structure(html)
   end
 
+  def test_blog_mode_renders_social_panel_above_recent_posts
+    html = home_page_html(config_contents: <<~YAML)
+      backpack:
+        mode: blog
+    YAML
+
+    assert_includes html, "<h2>Find me online</h2>"
+    assert_includes html, "github.com/bergerb"
+    assert_includes html, "linkedin.com/in/brent-berger-bb19719"
+    assert_match(
+      %r{<section class="panel panel--blog-social">.*?<h2>Find me online</h2>.*?</section>\s*<section class="panel panel--wide">.*?<h2>Recent Writing</h2>}m,
+      html
+    )
+  end
+
   def test_home_layout_normalizes_mode_and_routes_resume_partials
     layout = home_layout
 
@@ -111,6 +126,7 @@ class SiteBuildTest < Minitest::Test
 
     assert_includes specification.files, "_layouts/home.html"
     assert_includes specification.files, "_includes/header.html"
+    assert_includes specification.files, "_includes/blog_social.html"
     assert_includes specification.files, "_includes/hero_blog.html"
     assert_includes specification.files, "_includes/hero_resume.html"
     assert_includes specification.files, "_includes/home_blog.html"
@@ -236,6 +252,7 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "Professional Experience"
     assert_includes html, "Core Strengths"
     refute_includes html, 'data-backpack-home="blog"'
+    refute_includes html, "<h2>Find me online</h2>"
   end
 
   def assert_blog_home_structure(html)
