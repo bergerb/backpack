@@ -114,10 +114,9 @@ a:hover {
 
 .hero__compact-bar {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .hero__media {
@@ -183,8 +182,17 @@ a:hover {
   margin: 0;
 }
 
+.hero__eyebrow-link {
+  color: inherit;
+}
+
+.hero__eyebrow-link:hover {
+  text-decoration: none;
+}
+
 .hero--compact .hero__actions {
   margin-top: 0;
+  justify-content: flex-start;
 }
 
 .hero--compact .button {

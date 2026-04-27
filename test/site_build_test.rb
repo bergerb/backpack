@@ -163,7 +163,7 @@ class SiteBuildTest < Minitest::Test
 
     assert_includes html, '<div class="site-shell">'
     assert_includes html, '<header class="hero hero--compact">'
-    assert_includes html, '<p class="eyebrow">BACKPACK</p>'
+    assert_includes html, '<p class="eyebrow"><a class="hero__eyebrow-link" href="/">BACKPACK</a></p>'
     assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
     assert_includes html, "<h1>About Backpack</h1>"
     refute_includes html, "<img class=\"hero__avatar\""
@@ -276,6 +276,15 @@ class SiteBuildTest < Minitest::Test
     refute_includes html, 'class="site-bar"'
   end
 
+  def test_compact_blog_header_stacks_brand_and_links_on_the_left
+    css = main_stylesheet
+
+    assert_includes css, ".hero__compact-bar {\n  display: flex;"
+    assert_includes css, "  flex-direction: column;"
+    assert_includes css, "  align-items: flex-start;"
+    assert_includes css, ".hero__eyebrow-link {"
+  end
+
   private
 
   def repo_root
@@ -332,6 +341,10 @@ class SiteBuildTest < Minitest::Test
 
   def recent_posts_include
     File.read(File.join(repo_root, "_includes", "recent_posts.html"))
+  end
+
+  def main_stylesheet
+    File.read(File.join(repo_root, "assets", "css", "main.css"))
   end
 
   def assert_resume_home_structure(html)

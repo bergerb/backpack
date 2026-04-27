@@ -11,7 +11,7 @@
   {% if compact_hero %}
     <div class="hero__compact-bar">
       {% if blog_eyebrow %}
-        <p class="eyebrow">{{ blog_eyebrow }}</p>
+        <p class="eyebrow"><a class="hero__eyebrow-link" href="{{ '/' | relative_url }}">{{ blog_eyebrow }}</a></p>
       {% endif %}
       {% if nav_pages.size > 0 %}
         <div class="hero__actions">
