@@ -50,18 +50,37 @@ class SiteBuildTest < Minitest::Test
     )
   end
 
-  def test_blog_mode_uses_configured_identity_line_in_eyebrow
+  def test_blog_mode_uses_configured_identity_line_and_subtitle
     html = home_page_html(config_contents: <<~YAML)
       title: "Bergerb"
       author: "Brent Berger"
       subtitle: "Adventures in Software Development and Life"
       backpack:
         mode: blog
-        blog_eyebrow: "BERGERB.NET, Brent Berger, Adventures in Software Development and Life"
+        blog_eyebrow: "BERGERB.NET"
+    YAML
+    
+    assert_includes html, "<p class=\"eyebrow\">BERGERB.NET</p>"
+    assert_includes html, "<h1>Brent Berger</h1>"
+    assert_includes html, "<p class=\"hero__summary\">Adventures in Software Development and Life</p>"
+    refute_includes html, "BERGERB.NET, Brent Berger, Adventures in Software Development and Life"
+    refute_includes html, "Building secure, accessible, and maintainable software with a calm delivery cadence."
+  end
+
+  def test_blog_mode_falls_back_to_title_author_and_subtitle_on_separate_lines
+    html = home_page_html(config_contents: <<~YAML)
+      title: "Bergerb"
+      author: "Brent Berger"
+      subtitle: "Adventures in Software Development and Life"
+      backpack:
+        mode: blog
     YAML
 
-    assert_includes html, "BERGERB.NET, Brent Berger, Adventures in Software Development and Life"
-    refute_includes html, "<p class=\"eyebrow\">Brent Berger</p>"
+    assert_includes html, "<p class=\"eyebrow\">BERGERB</p>"
+    assert_includes html, "<h1>Brent Berger</h1>"
+    assert_includes html, "<p class=\"hero__summary\">Adventures in Software Development and Life</p>"
+    refute_includes html, "BERGERB, Brent Berger, Adventures in Software Development and Life"
+    refute_includes html, "<h1>Sample Engineer</h1>"
   end
 
   def test_blog_mode_renders_avatar_on_the_right_when_configured

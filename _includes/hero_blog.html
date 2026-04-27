@@ -1,12 +1,10 @@
 {% assign header = site.data.backpack.header %}
 {% assign nav_pages = site.pages | where: "include_nav", true | sort: "title" %}
 {% assign blog_eyebrow = site.backpack.blog_eyebrow %}
+{% assign blog_name = site.backpack.blog_name | default: site.author | default: header.name %}
+{% assign blog_summary = site.backpack.blog_summary | default: site.subtitle | default: header.summary %}
 {% unless blog_eyebrow %}
-  {% if site.title and site.author and site.subtitle %}
-    {% capture blog_eyebrow %}{{ site.title | upcase }}, {{ site.author }}, {{ site.subtitle }}{% endcapture %}
-  {% else %}
-    {% assign blog_eyebrow = header.eyebrow %}
-  {% endif %}
+  {% assign blog_eyebrow = site.title | upcase | default: header.eyebrow %}
 {% endunless %}
 <header class="hero">
   <div class="hero__grid">
@@ -14,9 +12,9 @@
       {% if blog_eyebrow %}
         <p class="eyebrow">{{ blog_eyebrow }}</p>
       {% endif %}
-      <h1>{{ header.name }}</h1>
-      {% if header.summary %}
-        <p class="hero__summary">{{ header.summary | strip }}</p>
+      <h1>{{ blog_name }}</h1>
+      {% if blog_summary %}
+        <p class="hero__summary">{{ blog_summary | strip }}</p>
       {% endif %}
       {% if nav_pages.size > 0 %}
         <div class="hero__actions">
@@ -28,7 +26,7 @@
     </div>
     {% if site.avatar_url %}
       <div class="hero__media">
-        <img class="hero__avatar" src="{{ site.avatar_url }}" alt="{{ header.name }} portrait">
+        <img class="hero__avatar" src="{{ site.avatar_url }}" alt="{{ blog_name }} portrait">
       </div>
     {% endif %}
   </div>
