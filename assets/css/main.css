@@ -45,6 +45,11 @@ a:hover {
   margin: 24px auto 40px;
 }
 
+.page-shell--blog {
+  width: 100%;
+  margin: 24px 0 40px;
+}
+
 .site-bar {
   padding: 20px 0 0;
 }
@@ -335,6 +340,31 @@ a:hover {
   gap: 16px;
 }
 
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.pager__link,
+.pager__summary {
+  font-weight: 600;
+}
+
+.pager__summary {
+  color: var(--muted);
+}
+
+.pager__link--disabled {
+  color: var(--muted);
+  opacity: 0.6;
+}
+
 .post-card {
   padding: 20px 22px;
   border: 1px solid var(--border);
@@ -475,6 +505,11 @@ a:hover {
 
   .hero__actions {
     flex-direction: column;
+  }
+
+  .pager {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .button {

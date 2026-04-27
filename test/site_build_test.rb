@@ -114,9 +114,19 @@ class SiteBuildTest < Minitest::Test
 
   def test_recent_posts_description_uses_default_without_dead_guard
     include_template = recent_posts_include
-
+ 
     assert_includes include_template, '{% assign description = include.description | default: "Blog-ready theme support for posts and page navigation." %}'
     refute_includes include_template, "{% if description %}"
+  end
+
+  def test_recent_posts_include_preserves_pagination_navigation
+    include_template = recent_posts_include
+
+    assert_includes include_template, "{% for post in recent_posts %}"
+    refute_includes include_template, "limit: 5"
+    assert_includes include_template, "{% if paginator.total_pages > 1 %}"
+    assert_includes include_template, "{% if paginator.previous_page %}"
+    assert_includes include_template, "{% if paginator.next_page %}"
   end
 
   def test_builds_standard_page_content
@@ -141,6 +151,21 @@ class SiteBuildTest < Minitest::Test
 
     assert_includes html, "About Backpack"
     assert_includes html, "remote theme"
+  end
+
+  def test_blog_mode_page_layout_keeps_hero_header
+    output_directory = build_site(config_contents: <<~YAML)
+      backpack:
+        mode: blog
+    YAML
+
+    html = File.read(File.join(output_directory, "about", "index.html"))
+
+    assert_includes html, '<div class="site-shell">'
+    assert_includes html, '<header class="hero">'
+    assert_includes html, '<p class="eyebrow">BACKPACK</p>'
+    assert_includes html, "<h1>About Backpack</h1>"
+    refute_includes html, 'class="site-bar"'
   end
 
   def test_builds_pdf_resume_view
@@ -228,6 +253,21 @@ class SiteBuildTest < Minitest::Test
     assert_includes html, "Jan 1, 2026"
     assert_includes html, "Backpack can now host standard blog posts"
     assert_includes html, "backpack-demo.disqus.com/embed.js"
+  end
+
+  def test_blog_mode_post_layout_keeps_hero_header
+    output_directory = build_site(config_contents: <<~YAML)
+      backpack:
+        mode: blog
+    YAML
+
+    html = File.read(File.join(output_directory, "2026", "01", "01", "welcome-to-backpack", "index.html"))
+
+    assert_includes html, '<div class="site-shell">'
+    assert_includes html, '<header class="hero">'
+    assert_includes html, "<h1>Welcome to Backpack</h1>"
+    assert_includes html, "backpack-demo.disqus.com/embed.js"
+    refute_includes html, 'class="site-bar"'
   end
 
   private

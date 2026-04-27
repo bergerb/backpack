@@ -11,10 +11,23 @@
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
 </head>
 <body>
+  {% assign backpack_mode = site.backpack.mode | default: "resume" | downcase %}
+  {% unless backpack_mode == "blog" %}
+    {% assign backpack_mode = "resume" %}
+  {% endunless %}
   {% include site_header.html %}
-  <main class="page-shell">
-    {{ content }}
-  </main>
+  {% if backpack_mode == "blog" %}
+    <div class="site-shell">
+      {% include hero_blog.html %}
+      <main class="page-shell page-shell--blog">
+        {{ content }}
+      </main>
+    </div>
+  {% else %}
+    <main class="page-shell">
+      {{ content }}
+    </main>
+  {% endif %}
   {% include site_footer.html %}
 </body>
 </html>
