@@ -1,19 +1,34 @@
 {% assign header = site.data.backpack.header %}
 {% assign nav_pages = site.pages | where: "include_nav", true | sort: "title" %}
+{% assign blog_eyebrow = site.backpack.blog_eyebrow %}
+{% unless blog_eyebrow %}
+  {% if site.title and site.author and site.subtitle %}
+    {% capture blog_eyebrow %}{{ site.title | upcase }}, {{ site.author }}, {{ site.subtitle }}{% endcapture %}
+  {% else %}
+    {% assign blog_eyebrow = header.eyebrow %}
+  {% endif %}
+{% endunless %}
 <header class="hero">
-  <div class="hero__content">
-    {% if header.eyebrow %}
-      <p class="eyebrow">{{ header.eyebrow }}</p>
-    {% endif %}
-    <h1>{{ header.name }}</h1>
-    {% if header.summary %}
-      <p class="hero__summary">{{ header.summary | strip }}</p>
-    {% endif %}
-    {% if nav_pages.size > 0 %}
-      <div class="hero__actions">
-        {% for item in nav_pages %}
-          <a class="button button--ghost" href="{{ item.url | relative_url }}">{{ item.nav_title | default: item.title }}</a>
-        {% endfor %}
+  <div class="hero__grid">
+    <div class="hero__content">
+      {% if blog_eyebrow %}
+        <p class="eyebrow">{{ blog_eyebrow }}</p>
+      {% endif %}
+      <h1>{{ header.name }}</h1>
+      {% if header.summary %}
+        <p class="hero__summary">{{ header.summary | strip }}</p>
+      {% endif %}
+      {% if nav_pages.size > 0 %}
+        <div class="hero__actions">
+          {% for item in nav_pages %}
+            <a class="button button--ghost" href="{{ item.url | relative_url }}">{{ item.nav_title | default: item.title }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    {% if site.avatar_url %}
+      <div class="hero__media">
+        <img class="hero__avatar" src="{{ site.avatar_url }}" alt="{{ header.name }} portrait">
       </div>
     {% endif %}
   </div>

@@ -50,6 +50,33 @@ class SiteBuildTest < Minitest::Test
     )
   end
 
+  def test_blog_mode_uses_configured_identity_line_in_eyebrow
+    html = home_page_html(config_contents: <<~YAML)
+      title: "Bergerb"
+      author: "Brent Berger"
+      subtitle: "Adventures in Software Development and Life"
+      backpack:
+        mode: blog
+        blog_eyebrow: "BERGERB.NET, Brent Berger, Adventures in Software Development and Life"
+    YAML
+
+    assert_includes html, "BERGERB.NET, Brent Berger, Adventures in Software Development and Life"
+    refute_includes html, "<p class=\"eyebrow\">Brent Berger</p>"
+  end
+
+  def test_blog_mode_renders_avatar_on_the_right_when_configured
+    html = home_page_html(config_contents: <<~YAML)
+      avatar_url: "https://example.com/avatar.png"
+      backpack:
+        mode: blog
+    YAML
+
+    assert_match(
+      %r{<div class="hero__media">\s*<img class="hero__avatar" src="https://example.com/avatar\.png" alt="Sample Engineer portrait">\s*</div>}m,
+      html
+    )
+  end
+
   def test_home_layout_normalizes_mode_and_routes_resume_partials
     layout = home_layout
 
