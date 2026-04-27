@@ -278,11 +278,20 @@ class SiteBuildTest < Minitest::Test
 
   def test_compact_blog_header_stacks_brand_and_links_on_the_left
     css = main_stylesheet
-
+ 
     assert_includes css, ".hero__compact-bar {\n  display: flex;"
     assert_includes css, "  flex-direction: column;"
     assert_includes css, "  align-items: flex-start;"
     assert_includes css, ".hero__eyebrow-link {"
+  end
+
+  def test_page_content_images_are_constrained_within_the_card
+    css = main_stylesheet
+
+    assert_includes css, ".page-content img {"
+    assert_includes css, "  display: block;"
+    assert_includes css, "  max-width: 100%;"
+    assert_includes css, "  height: auto;"
   end
 
   private
