@@ -15,4 +15,6 @@ exclude:
   - backpack.gemspec
   - README.md
   - test
+  - _site_test
+  - _test_config_override.yml
 
