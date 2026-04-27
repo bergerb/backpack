@@ -3,18 +3,15 @@
 {% assign blog_eyebrow = site.backpack.blog_eyebrow %}
 {% assign blog_name = site.backpack.blog_name | default: site.author | default: header.name %}
 {% assign blog_summary = site.backpack.blog_summary | default: site.subtitle | default: header.summary %}
+{% assign compact_hero = include.compact | default: false %}
 {% unless blog_eyebrow %}
   {% assign blog_eyebrow = site.title | upcase | default: header.eyebrow %}
 {% endunless %}
-<header class="hero">
-  <div class="hero__grid">
-    <div class="hero__content">
+<header class="hero{% if compact_hero %} hero--compact{% endif %}">
+  {% if compact_hero %}
+    <div class="hero__compact-bar">
       {% if blog_eyebrow %}
         <p class="eyebrow">{{ blog_eyebrow }}</p>
-      {% endif %}
-      <h1>{{ blog_name }}</h1>
-      {% if blog_summary %}
-        <p class="hero__summary">{{ blog_summary | strip }}</p>
       {% endif %}
       {% if nav_pages.size > 0 %}
         <div class="hero__actions">
@@ -24,10 +21,29 @@
         </div>
       {% endif %}
     </div>
-    {% if site.avatar_url %}
-      <div class="hero__media">
-        <img class="hero__avatar" src="{{ site.avatar_url }}" alt="{{ blog_name }} portrait">
+  {% else %}
+    <div class="hero__grid">
+      <div class="hero__content">
+        {% if blog_eyebrow %}
+          <p class="eyebrow">{{ blog_eyebrow }}</p>
+        {% endif %}
+        <h1>{{ blog_name }}</h1>
+        {% if blog_summary %}
+          <p class="hero__summary">{{ blog_summary | strip }}</p>
+        {% endif %}
+        {% if nav_pages.size > 0 %}
+          <div class="hero__actions">
+            {% for item in nav_pages %}
+              <a class="button button--ghost" href="{{ item.url | relative_url }}">{{ item.nav_title | default: item.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
-    {% endif %}
-  </div>
+      {% if site.avatar_url %}
+        <div class="hero__media">
+          <img class="hero__avatar" src="{{ site.avatar_url }}" alt="{{ blog_name }} portrait">
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
 </header>

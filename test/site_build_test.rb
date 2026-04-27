@@ -162,9 +162,12 @@ class SiteBuildTest < Minitest::Test
     html = File.read(File.join(output_directory, "about", "index.html"))
 
     assert_includes html, '<div class="site-shell">'
-    assert_includes html, '<header class="hero">'
+    assert_includes html, '<header class="hero hero--compact">'
     assert_includes html, '<p class="eyebrow">BACKPACK</p>'
+    assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
     assert_includes html, "<h1>About Backpack</h1>"
+    refute_includes html, "<img class=\"hero__avatar\""
+    refute_includes html, "<p class=\"hero__summary\">"
     refute_includes html, 'class="site-bar"'
   end
 
@@ -264,9 +267,12 @@ class SiteBuildTest < Minitest::Test
     html = File.read(File.join(output_directory, "2026", "01", "01", "welcome-to-backpack", "index.html"))
 
     assert_includes html, '<div class="site-shell">'
-    assert_includes html, '<header class="hero">'
+    assert_includes html, '<header class="hero hero--compact">'
+    assert_match(%r{<div class="hero__actions">.*About Backpack.*</div>}m, html)
     assert_includes html, "<h1>Welcome to Backpack</h1>"
     assert_includes html, "backpack-demo.disqus.com/embed.js"
+    refute_includes html, "<img class=\"hero__avatar\""
+    refute_includes html, "<p class=\"hero__summary\">"
     refute_includes html, 'class="site-bar"'
   end
 

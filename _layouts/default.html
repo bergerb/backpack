@@ -18,7 +18,7 @@
   {% include site_header.html %}
   {% if backpack_mode == "blog" %}
     <div class="site-shell">
-      {% include hero_blog.html %}
+      {% include hero_blog.html compact=true %}
       <main class="page-shell page-shell--blog">
         {{ content }}
       </main>

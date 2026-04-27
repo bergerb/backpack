@@ -112,6 +112,14 @@ a:hover {
   align-items: center;
 }
 
+.hero__compact-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
 .hero__media {
   display: flex;
   justify-content: center;
@@ -165,6 +173,23 @@ a:hover {
 
 .hero__actions {
   margin-top: 28px;
+}
+
+.hero--compact {
+  padding: 18px 28px;
+}
+
+.hero--compact .eyebrow {
+  margin: 0;
+}
+
+.hero--compact .hero__actions {
+  margin-top: 0;
+}
+
+.hero--compact .button {
+  min-height: 38px;
+  padding: 0 16px;
 }
 
 .button,
