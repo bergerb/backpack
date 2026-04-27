@@ -26,6 +26,19 @@ class SiteBuildTest < Minitest::Test
     assert_resume_home_structure(html)
   end
 
+  def test_resume_mode_renders_avatar_when_configured
+    html = home_page_html(config_contents: <<~YAML)
+      avatar_url: "https://example.com/avatar.png"
+      backpack:
+        mode: resume
+    YAML
+
+    assert_match(
+      %r{<div class="hero__media">\s*<img class="hero__avatar" src="https://example.com/avatar\.png" alt="Sample Engineer portrait">\s*</div>}m,
+      html
+    )
+  end
+
   def test_explicit_blog_mode_renders_blog_home_structure
     html = home_page_html(config_contents: <<~YAML)
       backpack:
