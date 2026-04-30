@@ -142,6 +142,19 @@ class SiteBuildTest < Minitest::Test
     assert_includes include_template, "{% if paginator.next_page %}"
   end
 
+  def test_footer_omits_duplicate_title_and_author_line
+    html = home_page_html(config_contents: <<~YAML)
+      title: "Brent Berger"
+      author: "Brent Berger"
+      description: "Brent Berger's resume site"
+      backpack:
+        mode: resume
+    YAML
+
+    assert_includes html, "<p>Brent Berger's resume site</p>"
+    refute_includes html, "<p>Brent Berger by Brent Berger</p>"
+  end
+
   def test_builds_standard_page_content
     output_directory = File.join(repo_root, "_site_test")
     FileUtils.rm_rf(output_directory)

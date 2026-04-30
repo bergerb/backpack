@@ -1,6 +1,14 @@
 <footer class="site-footer">
   <div class="site-footer__inner">
-    <p>{{ site.title }}{% if site.author %} by {{ site.author }}{% endif %}</p>
-    <p>{{ site.description }}</p>
+    {% assign show_identity_line = true %}
+    {% if site.description and site.title and site.author and site.title == site.author %}
+      {% assign show_identity_line = false %}
+    {% endif %}
+    {% if show_identity_line %}
+      <p>{{ site.title }}{% if site.author %} by {{ site.author }}{% endif %}</p>
+    {% endif %}
+    {% if site.description %}
+      <p>{{ site.description }}</p>
+    {% endif %}
   </div>
 </footer>
