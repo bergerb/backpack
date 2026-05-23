@@ -63,6 +63,16 @@ class SiteBuildTest < Minitest::Test
     )
   end
 
+  def test_blog_mode_omits_recent_posts_description_when_blank
+    html = home_page_html(config_contents: <<~YAML)
+      backpack:
+        mode: blog
+    YAML
+
+    assert_includes html, "<h2>Recent Writing</h2>"
+    refute_includes html, "Latest posts and notes from the site."
+  end
+
   def test_blog_mode_uses_configured_identity_line_and_subtitle
     html = home_page_html(config_contents: <<~YAML)
       title: "Bergerb"
@@ -125,11 +135,12 @@ class SiteBuildTest < Minitest::Test
     assert_includes include_template, '{% assign backpack_mode = "resume" %}'
   end
 
-  def test_recent_posts_description_uses_default_without_dead_guard
+  def test_recent_posts_description_defaults_only_when_not_provided
     include_template = recent_posts_include
- 
-    assert_includes include_template, '{% assign description = include.description | default: "Blog-ready theme support for posts and page navigation." %}'
-    refute_includes include_template, "{% if description %}"
+
+    assert_includes include_template, "{% if include.description == nil %}"
+    assert_includes include_template, '{% assign description = "Blog-ready theme support for posts and page navigation." %}'
+    assert_includes include_template, "{% unless description == blank %}"
   end
 
   def test_recent_posts_include_preserves_pagination_navigation

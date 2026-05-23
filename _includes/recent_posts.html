@@ -1,12 +1,18 @@
 {% assign recent_posts = paginator.posts | default: site.posts %}
 {% assign section_class = include.section_class | default: "panel panel--wide" %}
 {% assign heading = include.heading | default: "Recent Writing" %}
-{% assign description = include.description | default: "Blog-ready theme support for posts and page navigation." %}
+{% if include.description == nil %}
+  {% assign description = "Blog-ready theme support for posts and page navigation." %}
+{% else %}
+  {% assign description = include.description %}
+{% endif %}
 {% if recent_posts.size > 0 %}
   <section class="{{ section_class }}">
     <div class="section-heading">
       <h2>{{ heading }}</h2>
-      <p>{{ description }}</p>
+      {% unless description == blank %}
+        <p>{{ description }}</p>
+      {% endunless %}
     </div>
 
     <div class="post-list">
@@ -44,4 +50,3 @@
     {% endif %}
   </section>
 {% endif %}
-
