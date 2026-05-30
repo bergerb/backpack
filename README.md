@@ -1,9 +1,8 @@
-# Backpack
+# 💼 Backpack
 
 Backpack is a resume-inspired Jekyll theme for personal sites. It is being built as a standalone theme repo first so consumer sites can adopt it later as a remote theme.
 
-## Current Theme Scope
-
+## ⚙️ Current Theme Scope
 This repo currently provides:
 
 - a resume-style `home` layout
@@ -17,8 +16,7 @@ This repo currently provides:
 
 The next step is migrating `bergerb.github.io` to consume this repo as its remote theme.
 
-## Remote Theme Usage
-
+## 🌐 Remote Theme Usage
 In a GitHub Pages site, add the remote theme and plugin support to your site repo:
 
 ```ruby
@@ -65,8 +63,7 @@ permalink: /pdf/
 ---
 ```
 
-## Homepage Modes
-
+## 🏠 Homepage Modes
 Backpack supports two homepage presentations through `_config.yml`:
 
 ```yaml
@@ -77,8 +74,7 @@ backpack:
 - `resume` renders the original resume-style homepage and remains the default when `backpack.mode` is missing or invalid.
 - `blog` renders the blog-oriented homepage while keeping standard `page`, `post`, and `pdf` layouts available for the rest of the site.
 
-## Data Contract
-
+## 🗄️ Data Contract
 The resume-style layouts expect a `_data/backpack.yml` file with these top-level keys:
 
 - `header`
@@ -99,8 +95,7 @@ Posts additionally use:
 
 The theme also supports either `comments.disqus_shortname` or the existing top-level `disqus_shortname` configuration shape.
 
-## Local Development
-
+## 💻 Local Development
 Install dependencies:
 
 ```powershell
@@ -118,4 +113,3 @@ Build the demo site:
 ```powershell
 bundle exec rake build
 ```
-
