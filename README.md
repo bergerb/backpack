@@ -1,4 +1,4 @@
-# 💼 Backpack
+# 💼 Backpack v1
 
 Backpack is a resume-inspired Jekyll theme for personal sites. 
 
